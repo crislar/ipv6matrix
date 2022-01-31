@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ "$(ls -A ./domains/ 2>/dev/null)" ]; then
+	echo "./domains not empty, not downloading the domain list"
+else
+	mkdir -p ./domains/
+	echo "Downloading the majestic million domains"
+	wget -O all.txt http://downloads.majestic.com/majestic_million.csv
+	tail -n1000000 all.txt | cut -f3 -d, > domains/million.txt
+	# If supplemental.txt exists, add any domains from there into million.txt
+	cat supplemental.txt >> domains/million.txt 2>/dev/null
+fi
+python3 ipv6crawl.py >crawler.log 2>&1 &
+echo "Crawl running. Log is being written in crawler.log"

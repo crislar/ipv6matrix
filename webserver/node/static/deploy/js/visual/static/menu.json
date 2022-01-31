@@ -1,0 +1,72 @@
+{
+    "/": {
+        "name": "Home",
+        "label": "home"
+    },
+    "/hosts": {
+        "/country-:country": {
+            "label": "hosts"
+        },
+        "": {
+            "name": "IPv6 Hosts",
+            "label": "hosts"
+        }
+    },
+    "/dualstack": {
+        "/country-:country": {
+            "label": "dualstack"
+        },
+        "": {
+            "name": "Dual Stack",
+            "label": "dualstack"
+        }
+    },
+    "/ping": {
+        "/country-:country": {
+            "label": "ping"
+        },
+        "": {
+            "name": "Ping",
+            "label": "ping"
+        }
+    },
+    "/path": {
+        "/country-:country": {
+            "label": "path"
+        },
+        "": {
+            "name": "Path",
+            "label": "path"
+        }
+    },
+    "/reach": {
+        "/country-:country": {
+            "label": "reach"
+        },
+        "": {
+            "name": "Reachability",
+            "label": "reach"
+        }
+    },
+    "/domains": {
+        "/country-:country": {
+            "label": "domains"
+        },
+        "": {
+            "name": "IPv6 Domains",
+            "label": "domains"
+        }
+    },
+    "/domain": {
+        "-:domain": {
+            "label": "search"
+        },
+        "": {
+            "name": "Domain Search",
+            "label": "search"
+        }
+    },
+    "/country-:country": {
+        "label": "country"
+    }
+}

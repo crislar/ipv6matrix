@@ -1,0 +1,48 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='description' content=description)
+    meta(name='author' content=author)
+    title=title + (label ? ' | ' + label : '')
+    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400,600')
+    link(rel='stylesheet', href='/css/style.css')
+    link(rel='stylesheet', href='/css/fontello.css')
+    - if(debug)
+      script window.DEBUG = #{debug}
+    block head
+  body
+    header#header.container-full.clearfix
+      a#title(href='/')
+        img.logo(src='/images/logo.png')
+        img.logo.white(src='/images/logo_w.png')
+        div IPv6Matrix
+      ul#menu
+        - navLinks.forEach(function(link){
+          - var isActive = (link.label == section ? 'active' : '')
+          li(class=isActive)
+            a(href=link.path data-bypass)= link.label
+        - })
+    nav#nav
+      block nav
+
+    #page
+      #sidebar
+        #sidebar-inner
+          block side
+      #content-outer
+        #content
+          block content
+
+    block footer
+
+    script.
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-46304923-1']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();

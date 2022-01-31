@@ -1,0 +1,80 @@
+###########################
+# Features: if a feature is enabled this means that for each input *domain*, we will gather a bunch of hosts to analyze.
+# e.g. for NS, we get NS hosts, for MX we get MX hosts, for WWW and NTP we generate hosts by combining with prefixes
+# Metrics will only be run against enabled features, so if these are all off the metrics will be ignored
+###########################
+[features]
+NS = on
+MX = on
+WWW = on
+NTP = on
+
+###########################
+# Metric: a metric defines a crawling procedure that would be done on a single *host*, each metric is applied on all
+# hosts of a certain feature
+# For efficiency we only run against each unique IP once
+###########################
+[metrics]
+soa         = on
+reverse     = on
+geoip       = on
+ping        = on
+tcp80       = on
+tcp443      = on
+tcp25       = on
+tls	        = on
+path        = on
+ip6Type     = on
+
+[dirs]
+outputdir = ~/crawler/crawls
+inputdir  = ~/crawler/domains
+
+# For each prefix, reachability will be checked. eg. www.google.com www6.google.com etc.
+[WWW]
+prefixes = www,www6,ipv6,www.ipv6,six
+
+# As per WWW, these are all checked for reachability
+[NTP]
+prefixes = ntp,time
+
+[ping]
+#number of packets to send
+count = 5
+
+[tcp]
+# How many seconds to wait before timing out when checking TCP (eg. to port 80)
+timeout     = 2
+smtpTimeout = 10
+
+[geoip]
+asndb  = ~/crawler/GeoLite2-ASN.mmdb
+citydb = ~/crawler/GeoLite2-City.mmdb
+
+# lookup_chunk_size  = How many to fetch from the database at once
+# process_chunk_size = How many to process asynchronously at once
+# semaphore          = How many to process asynchronously at once
+[ip]
+lookup_chunk_size  = 10000
+process_chunk_size = 10000
+semaphore          = 100
+
+# chunk_size = How many to fetch from the database at once
+# semaphore  = How many to process asynchronously at once
+[domain]
+chunk_size         = 10000
+semaphore          = 100
+blacklist          = ~/crawler/blacklist
+
+[trace]
+max_ttl   = 30
+timeout   = 2
+ip4_local = PUTIPV4HERE
+ip6_local = PUTIPV6HERE
+
+[mysql]
+enabled    = no
+mysql_host = localhost
+mysql_user = ipv6matrix_staging
+mysql_pass = supersecretpassword
+mysql_db   = ipv6matrix_staging

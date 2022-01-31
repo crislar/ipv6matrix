@@ -1,0 +1,19 @@
+script#template-controller(type='text/template')
+  #controller
+    .panel
+      table.full
+        tr
+          td.slider
+          td.groups
+            #groups-button.button
+              span.current Group by
+              span.icon-up-dir
+            ul#groups-list
+          td.settings
+            #settings-button.icon-cog.button
+      .settings
+
+script#template-controller-group(type='text/template')
+  li(data-type!='<%= group %>')
+    a <%= label %>
+    .icon-help(title!='<%= desc %>')

@@ -1,0 +1,61 @@
+script#template-settings(type='text/template')
+  table#settings.full
+    td
+      .title Advanced settings
+      label
+        select#select-sample
+          - var samples = [0,1,50,100,500,1000,2000];
+          - for (var i = 0; i < samples.length; i++){
+            option(value=samples[i])=samples[i]
+          - }
+        ="Minimum hosts"
+    td
+      .title Filter Service Types
+      #tree-type.tree
+        ul
+          li.collapsed
+            label
+              input.all(type="checkbox" checked)
+              ="All Service Types"
+            ul.scroll
+              - var stypes = ["WWW","MX","NS","NTP"];
+              - for (var i = 0; i < stypes.length; i++){
+                li
+                  label
+                    input(type="checkbox" checked data-type=stypes[i])
+                    =stypes[i]
+              - }
+    td
+      .title Filter TLDs
+      #tree-tld.tree
+        ul
+          li.collapsed
+            label
+              input.all(type="checkbox" checked)
+              ="All TLDs"
+            ul
+              li.collapsed
+                label
+                  input(type="checkbox" checked)
+                  ="gTLDs"
+                ul.scroll
+                  - var gtlds = tlds.gtlds;
+                  - for (var i = 0; i < gtlds.length; i++){
+                    li
+                      label
+                        input(type="checkbox" checked data-tld=gtlds[i])
+                        =gtlds[i]
+                  - }
+            ul
+              li.collapsed
+                label
+                  input(type="checkbox" checked)
+                  ="ccTLDs"
+                ul.scroll
+                  - var cctlds = tlds.cctlds;
+                  - for (var i = 0; i < cctlds.length; i++){
+                    li
+                      label
+                        input(type="checkbox" checked data-tld=cctlds[i])
+                        =cctlds[i]
+                  - }

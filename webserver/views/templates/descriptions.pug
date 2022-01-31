@@ -1,0 +1,102 @@
+script#info-title-home(type='text/template').
+  IPv6 adoption around the Globe
+script#info-desc-home(type='text/template').
+  Welcome to IPv6Matrix.org.
+
+  The IPv6Matrix is a tool to gather and visualise data on IPv6 (Internet Protocol v6) deployment and accessibility from the top one million domain names around the world, since 2010.
+
+  <a data-bypass href="/about">More about the IPv6Matrix &raquo;</a>
+
+  The globe displays every countries' overall IPv6 adoption over time.
+
+  - Drag the globe to rotate.
+  - Drag the red slider to control the date.
+
+  This is only the surface of over 200 Gigabytes (and counting) of collected data.
+
+  <a href="/hosts">Continue to more detailed data &raquo;</a>
+
+script#info-title-hosts(type='text/template').
+  IPv6 Hosts
+script#info-desc-hosts(type='text/template').
+  This page displays an overview of IPv6 host adoption around the world.
+
+  A 'host' is a computer connected to a network, in this case it defined by a hostname entry in the DNS records for a domain (eg. www.example.com, mx.example.com or ns1.example.com).
+
+  A host may have have IPv4, IPv6 or both types of IP addresses listed in its DNS record using A and AAAA entries. If a host has a valid AAAA record it is considered an IPv6 enabled host.
+
+  The data shows the percentage of IPv6 uptake over time.
+
+script#info-title-dualstack(type='text/template').
+  Dual Stack Hosts
+script#info-desc-dualstack(type='text/template').
+  This page displays how many hosts have IPv4, IPv6 or both types of IP addresses listed in their DNS record.
+
+  IPv4 Only - Only 'A' found in DNS
+  IPv6 Only - Only 'AAAA' found in DNS
+  Dual Stack - Both 'A' and 'AAAA' found in DNS
+  No IP - neither 'A' or 'AAAA' found in DNS
+
+  'Dual Stack' refers to a side-by-side implementation of native IPv4 and IPv6. This is the most desirable type of IPv6 implementation as it avoids complex tunneling solutions.
+
+  The data shows a comparison between existing IPv4 implementations and the uptake of Dual Stack and IPv6 only implementations over time.
+
+script#info-title-ping(type='text/template').
+  Host Ping (Response time)
+script#info-desc-ping(type='text/template').
+  This page compares the average ping response times from IPv4 pings and IPv6 pings on Dual Stack hosts.
+
+  'Ping' is a network utility to test round-trip times for messages sent between hosts, measured in Milliseconds (ms). In this case, each host is Pinged by the IPv6Matrix crawler.
+  A higher Response time indicates a slow or problematic network or IP implementation, therefore lower Ping values are preferred.
+
+  The data shows a comparison between the average response times for 5 tests over IPv4 and IPv6.
+  Only dual stack hosts are included to give a fair comparison between accessing the same destination over the IPv4 or IPv6 internet.
+
+script#info-title-path(type='text/template').
+  Host Path (Traceroute)
+script#info-desc-path(type='text/template').
+  This page displays an overview of the average IPv4 and IPv6 traceroute length for Dual Stack hosts.
+
+  'Traceroute' is a network diagnostic tool for measuring the number of hops (intermediate routes / distance in a network) through which a message must travel to its destination.
+  In this case, the hop count to each host is measured from IPv6Matrix.
+  A high hop count indicates complex routing or tunneling that can affect response time, therefore shorter path lengths are preferred.
+
+  The data shows a comparison between the average IPv4 and IPv6 hop counts to Dual Stack hosts.
+
+script#info-title-reach(type='text/template').
+  Host Reachability
+script#info-desc-reach(type='text/template').
+  Most data on this website simply measures the number of IPv4 (A) and IPv6 (AAAA) records in the DNS. This does not neccesarily mean typical web services are actually available.
+
+  To check this, each host is tested for a successful response on any three protocols: HTTP, HTTPS, SMTPS depending on the DNS record entry types (WWW or MX).
+
+  HTTP - Websites (WWW hosts)
+  HTTPS - Secure websites (WWW hosts)
+  SMPTS - Secure email (MX hosts)
+
+  The data shows a comparison between services successfully reachable over these protocols via IPv4 and IPv6.
+
+script#info-title-domains(type='text/template').
+  IPv6 Domains
+script#info-desc-domains(type='text/template').
+  This page displays an overview of IPv6 enabled domains.
+
+  A domain name may have many different hosts for a particular server type, for example email (MX) but only one needs to have an IPv6 address for that domain to be able to send and recieve email over the IPv6 internet.
+
+  Here, a domain name is considered to have implemented IPv6 if it has one or more IPv6 (AAAA) entries in any of its DNS records, this includes web, name, mail and time servers.
+
+  Domains are geo located to a country based on the IPv4 entry for the domains main web server.
+
+script#info-title-search(type='text/template').
+  Domain Search
+script#info-desc-search(type='text/template').
+  This page displays a detailed breakdown of the IPv6 implementation for a specific domain.
+
+  The data is similar to that found throughout the rest of the IPv6Matrix website.
+
+script#info-title-country(type='text/template').
+  Country Overview
+script#info-desc-country(type='text/template').
+  This page displays an overview of a specific country's IPv6 metrics.
+
+  The data is similar to that found throughout the rest of the IPv6Matrix website.

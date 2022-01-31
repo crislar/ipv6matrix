@@ -1,0 +1,12 @@
+script#template-graph(type='text/template')
+  .graph
+    svg.graph
+
+script#template-graph-bottom(type='text/template')
+  .bar.top
+    table#data-buttons.buttons.full.graphButtons
+        tr
+
+script#template-data-buttons(type='text/template')
+    td.data(data-type!='<%= data %>')
+        a <%= label %>

@@ -1,0 +1,4 @@
+.gitsecret/keys/random_seed
+config/dbConfig.json
+node_modules
+**/.DS_Store

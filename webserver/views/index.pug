@@ -1,0 +1,55 @@
+extends layout
+
+block head
+  script(data-main="/js/visual-app" src="/js/lib/require.js")
+  link(rel='stylesheet', href='/css/index.css')
+  link(rel='stylesheet', href='/css/nv.d3.css')
+
+block nav
+  ul
+    - for (var i = 0; i < men.length; i++){
+    li
+      - if(i===0){
+      a.icon-globe(href=men[i].url)
+      - } else {
+      a(href=men[i].url)= men[i].name
+      - }
+    - }
+
+block side
+  #view-title
+    .main.title
+    .detail
+    .date
+    .desc
+    .api
+
+block content
+
+block footer
+
+  include templates/map
+  include templates/panel
+  include templates/controller
+  include templates/slider
+  include templates/settings
+  include templates/graph
+  include templates/table
+  include templates/search
+  include templates/descriptions
+
+  script#template-side-title(type='text/template')
+    .sub <%= sub %>
+    .title <%= title %>
+
+  script#template-side-api(type='text/template')
+    table.buttons.full#api-buttons
+      tr
+        td
+          a(href!='<%= json %>' data-bypass) JSON
+        td
+          a(href!='<%= xml %>' data-bypass) XML
+        td
+          a(href!='<%= html %>' data-bypass) HTML
+        td
+          a(href!='<%= csv %>' data-bypass) CSV

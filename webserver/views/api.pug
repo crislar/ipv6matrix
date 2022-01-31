@@ -1,0 +1,314 @@
+extends layout
+
+block side
+  ul.outer
+    li.title
+      a(href='#api') API
+    li
+      a(href='#formats') Accessing the API
+    li
+      a(href='#formats') Data formats
+      ul
+        li
+          a(href='#json') JSON
+        li
+          a(href='#xml') XML
+        li
+          a(href='#html') HTML
+        li
+          a(href='#csv') CSV
+        li
+          a(href='#generic') Generic request
+    li
+      a(href='#resources') Resources & URIs
+      ul
+        li
+          a(href='#hosts') IPv6 Hosts
+        li
+          a(href='#dualstack') Dual Stack
+        li
+          a(href='#ping') Ping
+        li
+          a(href='#path') Path
+        li
+          a(href='#reach') Reachability
+        li
+          a(href='#domains') IPv6 Domains
+        li
+          a(href='#search') Domain Search
+        li
+          a(href='#country') Country Overview
+
+block content
+  h1#api API
+  p IPv6Matrix gives open access to all analysed crawler data via a <b>RESTful</b> API.
+  p The API has been designed to be easy to understand and to return information with an appropriate level of detail, in a variety of common data formats.
+
+  h2#formats Accessing the API
+  p To access data from the API an <b>HTTP GET</b> request must be made to a resource URI.
+  p An example request would be to <a href="http://ipv6matrix.org/data/hosts/group-country">http://ipv6matrix.org/data/hosts/group-country</a> which returns IPv6 Host data by date and grouped by country.
+
+  h2#formats Data formats
+  p The API offers JSON, XML, HTML and CSV data formats.
+  p The data format is specified as the first identifier or as a subdomain. For example: <tt>ipv6matrix.org/json</tt> or <tt>json.ipv6matrix.org</tt>.
+
+  h3#json JSON
+  p <tt>/json</tt> returns an <b>application/json</b> response. All JSON responses are heirachically structured by key, in order of the data selection defined by the URI. This simplifies data access and reduces response sizes.
+  p For example:
+  pre.
+    // request URI: /json/hosts/group-country
+    // JSON response, grouped by date then country:
+
+    {
+      "Mon Sep 13 2010 01:00:00 GMT+0100 (BST)" : {
+        "AD" : { "hosts" : 38, "hosts6" : 0 },
+        "AE" : { "hosts" : 1087, "hosts6" : 5 },
+        ...
+      },
+      "Sat Oct 23 2010 01:00:00 GMT+0100 (BST)" : {
+        "AD" : { "hosts" : 38, "hosts6" : 0 },
+        "AE" : { "hosts" : 1093, "hosts6" : 5 },
+        ...
+      },
+      ...
+    }
+
+  h3#xml XML
+  p <tt>/xml</tt> returns a <b>text/xml</b> response. All XML responses are mirror representations of the database reponse, returning each row and column as an individual tag.
+  p For example:
+  pre.
+    // request URI: <a href="/xml/hosts/group-country">/xml/hosts/group-country</a>
+    // XML response:
+
+    &lt;response&gt;
+      &lt;row&gt;
+        &lt;date&gt;Mon Sep 13 2010 01:00:00 GMT+0100 (BST)&lt;/date&gt;
+        &lt;hosts&gt;38&lt;/hosts&gt;
+        &lt;hosts6&gt;0&lt;/hosts6&gt;
+        &lt;country&gt;AD&lt;/country&gt;
+      &lt;/row&gt;
+      &lt;row&gt;
+        &lt;date&gt;Mon Sep 13 2010 01:00:00 GMT+0100 (BST)&lt;/date&gt;
+        &lt;hosts&gt;1087&lt;/hosts&gt;
+        &lt;hosts6&gt;5&lt;/hosts6&gt;
+        &lt;country&gt;AE&lt;/country&gt;
+      &lt;/row&gt;
+      ...
+    &lt;/response&gt;
+
+  h3#html HTML
+  p <tt>/html</tt> returns a <b>text/html</b> response. All HTML responses are mirror representations of the database reponse, returning the data in a table.
+  p For example:
+  pre.
+    // request URI: <a href="/html/hosts/group-country">/html/hosts/group-country</a>
+    // HTML response:
+
+    &lt;table&gt;
+      &lt;tr&gt;
+        &lt;td&gt;date&lt;/td&gt;
+        &lt;td&gt;hosts&lt;/td&gt;
+        &lt;td&gt;hosts6&lt;/td&gt;
+        &lt;td&gt;country&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;Mon Sep 13 2010 01:00:00 GMT+0100 (BST)&lt;/td&gt;
+        &lt;td&gt;38&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;AD&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;Mon Sep 13 2010 01:00:00 GMT+0100 (BST)&lt;/td&gt;
+        &lt;td&gt;1087&lt;/td&gt;
+        &lt;td&gt;5&lt;/td&gt;
+        &lt;td&gt;AE&lt;/td&gt;
+      &lt;/tr&gt;
+      ...
+    &lt;/table>
+
+  h3#csv CSV
+  p <tt>/csv</tt> returns a <b>text/plain</b> response. All CSV responses are mirror representations of the database reponse, returning the data in a comma seperated format.
+  p For example:
+  pre.
+    // request URI: <a href="/csv/hosts/group-country">/csv/hosts/group-country</a>
+    // CSV response:
+
+    date,hosts,hosts6,country
+    Mon Sep 13 2010 01:00:00 GMT+0100 (BST),38,0,AD
+    Mon Sep 13 2010 01:00:00 GMT+0100 (BST),1087,5,AE
+    ...
+
+  h3#generic Generic request
+  p <tt>/data</tt> attempts to return the corresponding format to the request's <b>Content-Type</b> header field. If a corresponding format can not be found, a default HTML response will be sent.
+
+  p For example <a href="/data/hosts/group-country">/data/hosts/group-country</a> will return HTML, to match your browsers default text/html Content-Type.
+
+  h2#resources Resources & URIs
+  p Below is a description of each URI endpoint and the data it returns.
+
+  h3#hosts
+    span IPv6 Hosts
+    a.link(href='/data/hosts') /hosts
+  p The total number of crawled Hosts and how many of those have some IPv6 implementation.
+  p <tt>/hosts</tt> Summary of total IPv6 Hosts by date.<br>Returns columns; <b>date</b>, <b>hosts</b>, <b>hosts6</b>.
+  p <tt>/hosts/group-:group</tt> A more detailed breakdown by group type.<br>Grouped by either; <b>country</b>, <b>tld</b> or <b>type</b>.<br>Returns columns;<b>date</b>, <b>hosts</b>, <b>hosts6</b>, <b>:group</b>.
+  p <tt>/hosts/group-:group/country-:country</tt> Grouped data for a specific country,<br>any ISO 3166 Alpha-2 country code e.g. <b>fr</b>, <b>gb</b>, <b>us</b> etc.<br>Returns columns; <b>date</b>, <b>hosts</b>, <b>hosts6</b>, <b>:group</b>.
+  p Column data types:
+  ul
+    li <b>date</b>: Date string
+    li <b>hosts</b>: Total number of Hosts
+    li <b>hosts6</b>: Total number of IPv6 enabled Hosts
+    li <b>:group</b>
+    ul
+      li <b>country</b>: Geo located Alpha-2 country code
+      li <b>tld</b>: Top Level Domain (TLD)
+      li <b>type</b>: Service type (WWW / MX / NTP / NS)
+
+  h3#dualstack
+    span Dual Stack
+    a.link(href='/data/dualstack') /dualstack
+  p The total number for each Host IP implementation (IPv6, IPv6, Dual Stack, No IP).
+  p <tt>/dualstack</tt> Summary of Dual Stack data.<br>Returns columns; <b>date</b>, <b>hosts</b>, <b>hosts4</b>, <b>hosts6</b>, <b>dualstack</b>, <b>noip</b>.
+  p <tt>/dualstack/group-:group</tt> A more detailed breakdown.<br>Grouped by either; <b>country</b>, <b>tld</b> or <b>type</b>.<br>Returns columns;<b>date</b>, <b>hosts</b>, <b>hosts4</b>, <b>hosts6</b>, <b>dualstack</b>, <b>noip</b>, <b>:group</b>.
+  p <tt>/dualstack/group-:group/country-:country</tt> Data for a specific country.<br>Any ISO 3166 Alpha-2 country code e.g. <b>fr</b>, <b>gb</b>, <b>us</b> etc.<br>Returns columns; <b>date</b>, <b>hosts</b>, <b>hosts4</b>, <b>hosts6</b>, <b>dualstack</b>, <b>noip</b>, <b>:group</b>.
+  p Column data types:
+    ul
+      li <b>date</b>: Date string
+      li <b>hosts</b>: Total number of Hosts
+      li <b>hosts4</b>: Total number of IPv4 only Hosts
+      li <b>hosts6</b>: Total number of IPv6 only Hosts
+      li <b>dualstack</b>: Total number of Dual Stack Hosts
+      li <b>noip</b>: Total number of Hosts with an IP implementation
+      li <b>:group</b>
+      ul
+        li <b>country</b>: Geo located Alpha-2 country code
+        li <b>tld</b>: Top Level Domain (TLD)
+        li <b>type</b>: Service type (WWW / MX / NTP / NS)
+  h3#ping
+    span Ping
+    a.link(href='/data/ping') /ping
+  p The average response times over IPv4 and IPv6 for Dual Stack Hosts.
+  p <tt>/ping</tt> Summary of Ping data.<br>Returns columns; <b>date</b>, <b>hosts</b>, <b>faster</b>, <b>ping4</b>, <b>ping6</b>.
+  p <tt>/ping/group-:group</tt> A more detailed breakdown.<br>Grouped by either; <b>country</b>, <b>tld</b> or <b>type</b>.<br>Returns columns; <b>date</b>, <b>hosts</b>, <b>faster</b>, <b>ping4</b>, <b>ping6</b>, <b>:group</b>.
+  p <tt>/ping/group-:group/country-:country</tt> Data for a specific country.<br>Any ISO 3166 Alpha-2 country code e.g. <b>fr</b>, <b>gb</b>, <b>us</b> etc.<br>Returns columns; <b>date</b>, <b>hosts</b>, <b>faster</b>, <b>ping4</b>, <b>ping6</b>, <b>:group</b>.
+  p Column data types:
+    ul
+      li <b>date</b>: Date string
+      li <b>hosts</b>: Total number of successfully Pinged Dual Stack Hosts
+      li <b>faster</b>: Total number of lower IPv6 response times than IPv4
+      li <b>ping4</b>: Total sum of IPv4 response time (ms)
+      li <b>ping6</b>: Total sum of IPv6 response time (ms)
+      li <b>:group</b>
+      ul
+        li <b>country</b>: Geo located Alpha-2 country code
+        li <b>tld</b>: Top Level Domain (TLD)
+        li <b>type</b>: Service type (WWW / MX / NTP / NS)
+  h3#path
+    span Path
+    a.link(href='/data/path') /path
+  p The average Traceroute length of IPv4 and IPv6 for Dual Stack Hosts.
+  p <tt>/path</tt> Summary of Path data.<br>Returns columns; <b>date</b>, <b>hosts</b>, <b>fewer</b>, <b>hops4</b>, <b>hops6</b>.
+  p <tt>/path/group-:group</tt> A more detailed breakdown.<br>Grouped by either; <b>country</b>, <b>tld</b> or <b>type</b>.<br>Returns columns;<b>date</b>, <b>hosts</b>, <b>fewer</b>, <b>hops4</b>, <b>hops6</b>, <b>:group</b>.
+  p <tt>/path/group-:group/country-:country</tt> Data for a specific country.<br>Any ISO 3166 Alpha-2 country code e.g. <b>fr</b>, <b>gb</b>, <b>us</b> etc.<br>Returns columns; <b>date</b>, <b>hosts</b>, <b>fewer</b>, <b>hops4</b>, <b>hops6</b>, <b>:group</b>.
+  p Column data types:
+    ul
+      li <b>date</b>: Date string
+      li <b>hosts</b>: Total number of successfully Tracerouted Dual Stack Hosts
+      li <b>fewer</b>: Total number of IPv6 Path lengths with fewer Hops than IPv4
+      li <b>hops4</b>: Total sum of IPv4 Hop count
+      li <b>hops6</b>: Total sum of IPv6 Hop count
+      li <b>:group</b>
+      ul
+        li <b>country</b>: Geo located Alpha-2 country code
+        li <b>tld</b>: Top Level Domain (TLD)
+        li <b>type</b>: Service type (WWW / MX / NTP / NS)
+  h3#reach
+    span Reacability
+    a.link(href='/data/reach') /reach
+  p The total number of Hosts that are Reachable over each Protocol (HTTP / HTTPS / SMTPS).
+  p <tt>/reach</tt> Summary of Reachability data.<br>Returns columns; <b>date</b>, <b>hosts4</b>, <b>hosts6</b>, <b>reach4</b>, <b>reach6</b>.
+  p <tt>/reach/group-:group</tt> A more detailed breakdown.<br>Grouped by either; <b>country</b>, <b>tld</b> or <b>service</b>.<br>Returns columns;<b>date</b>, <b>date</b>, <b>hosts4</b>, <b>hosts6</b>, <b>reach4</b>, <b>reach6</b>, <b>:group</b>.
+  p <tt>/reach/group-:group/country-:country</tt> Data for a specific country.<br>Any ISO 3166 Alpha-2 country code e.g. <b>fr</b>, <b>gb</b>, <b>us</b> etc.<br>Returns columns; <b>date</b>, <b>hosts4</b>, <b>hosts6</b>, <b>reach4</b>, <b>reach6</b>, <b>:group</b>.
+  p Column data types:
+    ul
+      li <b>date</b>: Date string
+      li <b>hosts4</b>: Total number of IPv4 services
+      li <b>hosts6</b>: Total number of IPv6 services
+      li <b>reach4</b>: Total number of successful IPv4 responses
+      li <b>reach6</b>: Total number of successful IPv6 responses
+      li <b>:group</b>
+      ul
+        li <b>country</b>: Geo located Alpha-2 country code
+        li <b>tld</b>: Top Level Domain (TLD)
+        li <b>service</b>: Protocol type (HTTP / HTTPS / SMTPS)
+  h3#domains
+    span Domains
+    a.link(href='/data/domains') /domains
+  p The total number of IPv6 enabled Domains.
+  p <tt>/domains</tt> Summary of Domains data.<br>Returns columns; <b>date</b>, <b>domains</b>, <b>domains6</b>, <b>www</b>, <b>ns</b>, <b>mx</b>, <b>ntp</b>.
+  p <tt>/domains/group-:group</tt> A more detailed breakdown.<br>Grouped by either; <b>country</b> or <b>tld</b>.<br>Returns columns; <b>date</b>, <b>domains</b>, <b>domains6</b>, <b>www</b>, <b>ns</b>, <b>mx</b>, <b>ntp</b>, <b>:group</b>.
+  p <tt>/domains/group-:group/country-:country</tt> Data for a specific country.<br>Any ISO 3166 Alpha-2 country code e.g. <b>fr</b>, <b>gb</b>, <b>us</b> etc.<br>Returns columns; <b>date</b>, <b>domains</b>, <b>domains6</b>, <b>www</b>, <b>ns</b>, <b>mx</b>, <b>ntp</b>, <b>:group</b>.
+  p Column data types:
+    ul
+      li <b>date</b>: Date string
+      li <b>domains</b>: Total number of Domains
+      li <b>domains6</b>: Total number of IPv6 enabled Domains
+      li <b>www</b>: Total number of Domains with at least one IPv6 enabled Web service (WWW)
+      li <b>ns</b>: Total number of Domains with at least one IPv6 enabled Name service (NS)
+      li <b>mx</b>: Total number of Domains with at least one IPv6 enabled Mail service (MX)
+      li <b>ntp</b>: Total number of Domains with at least one IPv6 enabled Time service (NTP)
+      li <b>:group</b>
+      ul
+        li <b>country</b>: Geo located Alpha-2 country code
+        li <b>tld</b>: Top Level Domain (TLD)
+  h3#search
+    span Domain Search
+    a.link(href='/data/domain-google.com') /domain-google.com
+  p Detailed data for a specific domain and domain search functionality.
+  p <tt>/domain-:domain</tt> All data gathered on a specific <b>:domain</b> by date.<br>Returns columns; <b>date</b>, <b>country</b>, <b>www_hosts</b>, <b>www_hosts6</b>, <b>mx_hosts</b>, <b>mx_hosts6</b>, <b>ns_hosts</b>, <b>ns_hosts6</b>, <b>ntp_hosts</b>, <b>ntp_hosts6</b>, <b>http4</b>, <b>http6</b>, <b>https4</b>, <b>https6</b>, <b>smtp4</b>, <b>smtp6</b>, <b>faster</b>, <b>pingratio</b>, <b>fewer</b>, <b>hopratio</b>.
+  p <tt>/domain/search-:search</tt> Search for a domain starting with the string <b>:search</b>.<br>Returns a list of matched Domains.
+  p Column data types:
+    ul
+      li <b>date</b>: Date string
+      li <b>country</b>: Geo located Alpha-2 country code
+      li <b>www_hosts</b>: Total number of DNS entries for WWW
+      li <b>www_hosts6</b>: Total number of IPv6 DNS entries for WWW
+      li <b>mx_hosts6</b>: Total number of DNS entries for MX
+      li <b>mx_hosts6</b>: Total number of IPv6 DNS entries for MX
+      li <b>ns_hosts6</b>: Total number of DNS entries for NS
+      li <b>ns_hosts6</b>: Total number of IPv6 DNS entries for NS
+      li <b>ntp_hosts6</b>: Total number of DNS entries for NTP
+      li <b>ntp_hosts6</b>: Total number of IPv6 DNS entries for NTP
+      li <b>http4</b>: Total number of successful HTTP responses over IPv4
+      li <b>http6</b>: Total number of successful HTTP responses over IPv6
+      li <b>https4</b>: Total number of successful HTTPS responses over IPv4
+      li <b>https6</b>: Total number of successful HTTPS responses over IPv6
+      li <b>smtp4</b>: Total number of successful SMTPS responses over IPv4
+      li <b>smtp6</b>: Total number of successful SMTPS responses over IPv6
+      li <b>faster</b>: Total number of lower IPv6 response times than IPv4
+      li <b>pingratio</b>: Ratio of IPv6 to IPv4 Ping (= IPv6 Ping / IPv4 Ping)
+      li <b>fewer</b>: Total number of IPv6 Path lengths with fewer Hops than IPv4
+      li <b>hopratio</b>: Ratio of IPv6 to IPv4 Path lengths (= IPv6 Path / IPv4 Path)
+
+  h3#country
+    span Country Overview
+    a.link(href='/data/country-gb') /country-gb
+  p Detailed data for a specific country.
+  p <tt>/country-:country</tt> All data gathered on for a specific <b>:country</b> by date.<br>Returns columns; <b>date</b>, <b>country</b>, <b>hosts</b>, <b>hosts4</b>, <b>hosts6</b>, <b>hosts6only</b>, <b>dualstack</b>, <b>noip</b>, <b>pinghosts</b>, <b>faster</b>, <b>ping4</b>, <b>ping6</b>, <b>pathhosts</b>, <b>fewer</b>, <b>hops4</b>, <b>hops6</b>.
+  p Column data types:
+    ul
+      li <b>date</b>: Date string
+      li <b>country</b>: Geo located Alpha-2 country code
+      li <b>hosts</b>: Total number of Hosts
+      li <b>hosts4</b>: Total number of IPv4 enabled Hosts
+      li <b>hosts6</b>: Total number of IPv6 enabled Hosts
+      li <b>hosts6only</b>: Total number of IPv6 only Hosts
+      li <b>dualstack</b>: Total number of Dual Stack Hosts
+      li <b>noip</b>: Total number of Hosts without an IP implementation
+      li <b>pinghosts</b>: Total number of successfully Pinged Dual Stack Hosts
+      li <b>faster</b>: Total number of Hosts with IPv6 Pings lower than IPv4
+      li <b>ping4</b>: Total sum of IPv4 Ping
+      li <b>ping6</b>: Total sum of IPv6 Ping
+      li <b>pathhosts</b>: Total number of successfully Tracerouted Dual Stack Hosts
+      li <b>fewer</b>: Total number of Hosts with fewer IPv6 Hops than IPv5
+      li <b>hops4</b>: Total sum of IPv4 Hop counts
+      li <b>hops6</b>: Total sum of IPv6 Hop counts

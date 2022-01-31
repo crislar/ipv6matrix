@@ -1,0 +1,11 @@
+doctype xml
+if json && json.length
+  - var columns = [];
+  each val, key in json[0]
+    if (json[0].hasOwnProperty(key))
+      - columns.push(key);
+  response
+    each obj, row in json
+      row
+        each key in columns
+          #{key} #{json[row][key]}

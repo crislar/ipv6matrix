@@ -1,0 +1,42 @@
+extends layout
+block side
+    ul.outer
+      li.title
+        a(href='#about') About
+      li
+        a(href='#crawler') The Crawler
+      li
+        a(href='#api') API
+      li
+        a(href='#web') Website
+      li
+        a(href='#tech') Technologies
+
+block content
+    h1#about About
+    p The IPv6Matrix is a tool to gather and visualise data on IPv6 (Internet Protocol v6) deployment and accessibility around the world.  Data is regularly gathered by our crawler and is available to view on the website as soon as it has been processed.
+
+    h2#crawler The Crawler
+    p The Crawler is used to gather data on the deployment of IPv6 across the internet.  It was originally developed in Python by a team at Nile University and had been running consistently from September 2010 to June 2020.
+    p It was then rewritten by <a href='https://www.linkedin.com/in/jameslawrie/'>James Lawrie</a> at <a href='https://silvermou.se/'>Silvermouse</a> in 2021.
+    p Data is sourced by querying the DNS records of the top 1 million domains as rated by Majestic Million.  In particular, data is gathered about the IPv6 deployment across any Web, Mail, Time and Name servers listed in those records.  Further processing is performed on the hosts identified, including geolocation, ping and path comparison between IPv4 and v6 hosts, along with the comparable reachability of v4 and v6 services.
+
+    h2#api API
+    p All of our data is freely available for use via the API, however we request that appropriate credit is given.  For more information on how to use the API, visit our <a href='api'>API documentation page</a>.
+
+    h2#web Website
+    p This website has been updated in 2013, and again in 2021, to provide better and more compelling visualisations of our data, along with a focus on historical and geographical data to show how v6 adoption has progressed since 2010.
+
+    h2#tech Technologies
+    p This website makes use of the following technologies:
+    ul
+      li <b><a href='http://nodejs.org/'>Node.js</a></b> and it's modules:
+      ul
+        li
+          <b><a href='https://github.com/felixge/node-mysql'>node-mysql</b>
+      li Javascript:
+      ul
+        li
+          <b><a href='http://d3js.org/'>d3.js</b>
+        li
+          <b><a href='http://nvd3.org/'>nvd3.js</b>

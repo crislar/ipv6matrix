@@ -1,0 +1,31 @@
+extends layout
+block side
+  ul.outer
+    li.title
+      a(href='#credits') Credits
+    li
+      a(href='#isoc') ISOC
+    li
+      a(href='#nile') Nile University
+    li
+      a(href='#soton') Southampton University
+    li
+      a(href='#mythicbeasts') Mythic Beasts
+    li
+      a(href='#silvermouse') Silvermouse
+
+
+block content
+  h1#credits Credits
+  p IPv6Matrix gives open access to all analysed crawler data via a <b>RESTful</b> API.
+  p The API has been designed to be easy to understand and to return information with an appropriate level of detail, in a variety of common data formats.
+
+  h2#mythicbeasts Mythic Beasts
+  p The servers for this service (both the webserver and crawler) are kindly provided by <a href="https://www.mythic-beasts.com/">Mythic Beasts</a>
+
+  h2#silvermouse Silvermouse
+  p In 2021 James Lawrie from <a href="https://silvermou.se/">Silvermouse</a> extracted the webserver, crawler, and history from two disk images provided by ISOC.
+  p The crawler was written in Python2 and the webserver in NodeJS 0.10. A subcontractor (Robert Sandiford) updated the webserver to use a modern version of NodeJS.
+  p James rewrote the Python application in Python3, and reconfigured it to store the data in SQLite as the crawl proceeded.
+  p This allowed the crawler to only check each host once (many domains share MX, or CDN A/AAAA records), and also to resume in case of a crash.
+  p The new version was released in December 2021.

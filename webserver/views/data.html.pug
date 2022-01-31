@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    body
+      if json && json.length
+        - var columns = [];
+        table
+          tr
+            each val, key in json[0]
+              if (json[0].hasOwnProperty(key))
+                - columns.push(key);
+                td #{key}
+          each obj, row in json
+            tr
+              each key in columns
+                td #{json[row][key]}
+      else
+        table
+          tr
+            td error
+          tr
+            td empty query
