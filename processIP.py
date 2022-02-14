@@ -357,6 +357,7 @@ def getIPV6Subnet(ipv6, subnetDic, typeDic):
     valid='n/a'
     try:
         ipv6 = IP(ipv6)
+        valid = True
     except:
         valid = False
     if valid:
@@ -371,10 +372,10 @@ def getIPV6Subnet(ipv6, subnetDic, typeDic):
                     type = "undefined"
             except:
                 type = "undefined"
-            if id != 'n/a':
-                type ="undefined"
-                for k1,k2 in typeDic.keys():
-                    if id>=k1 and id<k2:
-                        type=typeDic[(k1,k2)]
-                        break
+        if id != 'n/a':
+            type ="undefined"
+            for k1,k2 in typeDic.keys():
+                if id>=k1 and id<k2:
+                    type=typeDic[(k1,k2)]
+                    break
     return (valid,id,type)
