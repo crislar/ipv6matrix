@@ -75,11 +75,11 @@ def generateReachability(c, mysqlc, date, tld, screen):
     c.execute("CREATE INDEX IF NOT EXISTS type ON tempreach(type);")
     c.execute("INSERT INTO tempreach (domain, host, country, type, ip4, ip6) SELECT domain, job.host, country_code, job.type, ip4.ip, ip6.ip FROM job JOIN ip4 ON job.host = ip4.host JOIN ip6 ON job.host = ip6.host WHERE job.tld = ?;", (tld, ))
     c.execute("UPDATE tempreach SET country  = 'ZZ' WHERE country = 'n/a'");
-    reachTypes = [("25", "SMTP", "SMTPS"), ("80", "WWW", "HTTP"), ("443", "WWW", "HTTPS")]
+    reachTypes = [("25", "MX", "SMTPS"), ("80", "WWW", "HTTP"), ("443", "WWW", "HTTPS")]
     for reachType in reachTypes:
         c.execute(f"UPDATE tempreach SET tcp{reachType[0]}_4  = True WHERE ip4 IN (SELECT ip FROM tcp WHERE port{reachType[0]}  = 'True' AND ip != 'n/a');")
         c.execute(f"UPDATE tempreach SET tcp{reachType[0]}_6  = True WHERE ip6 IN (SELECT ip FROM tcp WHERE port{reachType[0]}  = 'True' AND ip != 'n/a');")
-        c.execute(f"SELECT ifnull(country, 'ZZ') as country, COUNT(ip4) as hosts4, COUNT(ip6) as hosts6, TOTAL(tcp{reachType[0]}_4) as reach4, TOTAL(tcp{reachType[0]}_6) as reach6 FROM tempreach WHERE type = '{reachType[1]}' GROUP BY country")
+        c.execute(f"SELECT ifnull(country, 'ZZ') as country, COUNT(IIF(ip4='n/a', NULL, ip4)) as hosts4, COUNT(IIF(ip6='n/a', NULL, ip6)) as hosts6, TOTAL(tcp{reachType[0]}_4) as reach4, TOTAL(tcp{reachType[0]}_6) as reach6 FROM tempreach WHERE type = '{reachType[1]}' GROUP BY country")
         for row in c:
             try:
                 mysqlc.execute("INSERT INTO Reachability (date, tld, service, country, hosts4, hosts6, reach4, reach6) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)", (date,tld,reachType[2])+row)
