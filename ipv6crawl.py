@@ -79,12 +79,9 @@ if __name__ == '__main__':
         runTime=time.time()
         i+=1
         screenLogger.info("File # %s out of %s" %(i,ln))
-        runDir='%s/%s/%s/' %(outputDir,inFile[0],currentRun)
-        os.makedirs(runDir)
-        screenLogger.info("output written to dir:"+runDir)
         screenLogger.info("============= %s ==========="%inFile[0])
         screenLogger.info("Collecting DNS records")
-        tlds = runFeatures(runDir,inFile, onFeatures, screenLogger, config, conn)
+        tlds = runFeatures(inFile, onFeatures, screenLogger, config, conn)
         partRunTime = time.time()
         screenLogger.info("DNS records collected: %.2f sec ---" %(time.time() - runTime)) 
         screenLogger.info("Looking up and processing IPs")

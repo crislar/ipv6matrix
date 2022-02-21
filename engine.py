@@ -6,7 +6,7 @@ from dns.asyncresolver import Resolver
 from dns               import resolver, reversename
 from utils             import checkResolver, getOrSetRDNS
 
-def runFeatures(runDir, inFile, onFeatures,screen,config, conn):
+def runFeatures(inFile, onFeatures,screen,config, conn):
         #load domains
         domains  = set(loadDomains(inFile[1], config.get("domain","blacklist")))
         # Note, this only splits on the last . - eg. .co.uk will be uk
