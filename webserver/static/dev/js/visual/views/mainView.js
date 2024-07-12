@@ -272,7 +272,7 @@ define(function (require) {
                     c = _data[date];
                     for(var i in c){
                         c[i].percentage = c[i].hosts ? c[i].faster / c[i].hosts : 0;
-                        c[i].ratio = c[i].ping4 ? c[i].ping6 / c[i].ping4 : 0;
+                        c[i].ratio = c[i].ping4 ? c[i].pingratio : 0;
                     }
                 }
             };
@@ -323,7 +323,7 @@ define(function (require) {
                     c = _data[date];
                     for(var i in c){
                         c[i].percentage = c[i].hosts ? c[i].fewer / c[i].hosts : 0;
-                        c[i].ratio = c[i].hops4 ? c[i].hops6 / c[i].hops4 : 0;
+                        c[i].ratio = c[i].hops4 ? c[i].hopratio : 0;
                     }
                 }
             };
@@ -561,9 +561,9 @@ define(function (require) {
 					for(var i in c){
 						c[i].percentage = c[i].hosts ? c[i].hosts6 / c[i].hosts : 0;
 						c[i].pingpercentage = c[i].pinghosts ? c[i].faster / c[i].pinghosts : 0;
-						c[i].pingratio = c[i].ping4 ? c[i].ping6 / c[i].ping4 : 0;
+						c[i].pingratio = c[i].ping4 ? c[i].pingratio : 0;
 						c[i].pathpercentage = c[i].hosts ? c[i].fewer / c[i].hosts : 0;
-						c[i].pathratio = c[i].hops4 ? c[i].hops6 / c[i].hops4 : 0;
+						c[i].pathratio = c[i].hops4 ? c[i].hopratio : 0;
 					}
 				}
 			};
