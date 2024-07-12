@@ -12,6 +12,8 @@ a2enmod proxy_http
 # Node Server
 
 npm install
+cd webserver/static/
+node build/r.js -o build/build.js
 npm run start (production) OR npm run dev (local development mode)
 
 # Database
